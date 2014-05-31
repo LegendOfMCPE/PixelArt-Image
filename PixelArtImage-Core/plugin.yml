@@ -1,6 +1,6 @@
 name: PixelArtImage alpha
 author: LegendsOfMCPE
-main: PixArtImg\Main
+main: PixArtImg\Core\Main
 load: POSTWORLD
 api: [1.0.0]
 version: 0
