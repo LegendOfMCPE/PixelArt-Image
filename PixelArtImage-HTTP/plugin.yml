@@ -1,0 +1,21 @@
+name: PixelArtImage-HTTP-alpha
+author: LegendsOfMCPE
+main: PixArtImg\HTTP\Main
+load: POSTWORLD
+depend: PixelArtImage-Core-alpha
+website: https://github.com/LegendOfMCPE/PixelArt-Image
+prefix: PAI
+description: Downloads images from HTTP and displays them via PixelArtImage-Core.
+commands:
+  http:
+    usage: /http <URL> [player]
+    description: Displays an image downloaded from HTTP URL <URL> via PixelArtImage-Core
+    permission: pixartimg.http.http
+permissions:
+  pixartimg.http:
+    description: Allow using PixelArtImage-HTTP functions
+    default: op
+    children:
+      pixelartimg.http.http:
+        description: Allow using /PAI:http
+        default: op
