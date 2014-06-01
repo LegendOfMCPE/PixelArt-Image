@@ -6,9 +6,12 @@ use pocketmine\Player;
 
 class MapImageTask extends Task{
 	protected $lastPublish = 0xdeadc0de;
-	public function __construct($main, Player $player, $url){
+	protected $map = null;
+	public function __construct($main, Player $player, $url, $callback){
+		$this->main = $main;
 		$this->player = $player;
 		$this->url = $url;
+		$this->callback = $callback;
 	}
 	public function publishProgress(){
 		$perc = $this->stage * 33;
@@ -62,7 +65,9 @@ class MapImageTask extends Task{
 				$map[$x][$y] = imagecolorat($res, $x, $y);
 			}
 		}
+		$this->map = $map;
 	}
 	public function onPostRun(){
+		call_user_func($this->callback, $this->map === null ? $this->getResult():$this->map, $this->player);
 	}
 }

@@ -2,6 +2,7 @@
 
 namespace PixArtImg\HTTP;
 
+use pocketmine\Player;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\PluginCommand;
@@ -22,7 +23,21 @@ class Main extends PluginBase{
 		if(!isset($args[0])){
 			return false;
 		}
+		if(!($issuer instanceof Player)){
+			$issuer->sendMessage("Please run this command in-game.");
+			return true;
+		}
 		$url = array_shift($args);
-		
+		if(substr($url, 0, 7) !== "http://"){
+			$issuer->sendMessage("Only images from the internet are allowed. Please start your URL with \"http://\".");
+			return true;
+		}
+		$this->taskMgr->schedule(new MapImageTask($this, $issuer, $url, array($this, "showMap")));
+	}
+	public function showMap($result, Player $player){
+		if(!is_array($result)){
+			$player->sendMessage("Failed mapping the requested image. Reason: $result");
+		}
+		$this->getServer()->getPluginManager()->callEvent(new DrawImageRequestEvent($result, $player));
 	}
 }
