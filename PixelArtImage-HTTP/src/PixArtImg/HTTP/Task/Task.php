@@ -2,6 +2,7 @@
 
 namespace PixArtImg\HTTP\Task;
 
+use pocketmine\Server;
 use pocketmine\scheduler\AsyncTask;
 
 abstract class Task extends AsyncTask{
@@ -19,5 +20,7 @@ abstract class Task extends AsyncTask{
 	}
 	public abstract function onRuntime();
 	protected function onPostRun(){
+	}
+	public function onCompletion(Server $sevrer){
 	}
 }
