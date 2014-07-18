@@ -46,6 +46,7 @@ class Main extends PluginBase implements Listener{
 		$pk->metadata = 0;
 		$p->dataPacket($pk);
 		$p->sendMessage("The image has produced in front of you.");
+		$this->getServer()->getScheduler()->scheduleDelayedTask(new DespawnPlayerTask($this, $pk->eid, $p), $event->getTicks());
 	}
 	public function onQuit(PlayerQuitEvent $event){
 		if(isset($this->sessions[$event->getPlayer()])){
