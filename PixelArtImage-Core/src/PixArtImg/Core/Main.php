@@ -4,6 +4,7 @@ namespace PixArtImg\Core;
 
 use pocketmine\entity\Entity;
 use pocketmine\event\Listener;
+use pocketmine\network\protocol\AddPlayerPacket;
 use pocketmine\plugin\PluginBase;
 
 class Main extends PluginBase implements Listener{
