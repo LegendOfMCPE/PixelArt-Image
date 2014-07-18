@@ -2,6 +2,7 @@
 
 namespace PixArtImg\Core;
 
+use pocketmine\entity\Entity;
 use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
 
@@ -12,17 +13,24 @@ class Main extends PluginBase implements Listener{
 	}
 	/**
 	 * @priority LOWEST
-	 * @ignoreCancelled false
 	 */
 	public function drawImage(DrawImageRequestEvent $event){
 		if(@$this->sessions[$event->getPlayer()] === true){
 			$event->setCancelled(true);
 			return;
 		}
-		$p = $event->getPlayer();
 		$p->sendMessage("Creating PixelArt image...");
-		$p->sendMessage("The image is produced where the sun rises. Look at that direction!");
-		$z = $p->z - 128;
+		$pk = new AddPlayerPacket;
+		$pk->clientID = 0;
+		$pk->username = $tag;
+		$pk->eid = Entity::$entityCount++;
+		$vectors = $player->getDirectionVector()->multiply(8); // distance configurable?
+		$pk->x = $vectors->x;
+		$pk->y = $vectors->y;
+		$pk->z = $vectors->z;
+		$pk->pitch = 0;
+		$pk->yaw = 0;
+		$p->sendMessage("The image has produced in front of you.");
 	}
 	public function onQuit(PlayerQuitEvent $event){
 		if(isset($this->sessions[$event->getPlayer()])){
